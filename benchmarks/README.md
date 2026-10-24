@@ -16,3 +16,15 @@ python benchmarks/summarize_long_run.py
 `reference_summary.json` 是此次已完成运行的记录，逐图片 gzip CSV 和完整带图报告随私下资料包交付。原视频 SHA256 见 `video_identity.json`，每个分 P 校验见 `main_manifest.json`。原始 Bilibili CDN 链接会过期，未将临时下载令牌写入仓库；来源投稿地址均在清单内。
 
 这是离线高速回放评估；网页服务为实时速率。两者复用同一个图片证据模块、机位保护和状态机，服务另有断流与调度间隔保护。视觉标注不确定过渡段不计入严格发射前统计；未知图片单列。每次错误确认都计误报，撤销不能抹去误报记录。规则曾根据同一批录像修改，不是盲测。
+
+## 发动机初始火光复评
+
+`engine_glow_labels.json` 以发动机首次可见火光、亮芯或局部点火照亮为参考，不等待起飞尾焰。`evaluate_engine_glow.py` 只做离线事后评分，不向检测器提供标注。原有 groundtruth.json 保留为历史记录，不能用其中“火焰已明显露出”的较宽边界判断是否及时。
+
+```bash
+python benchmarks/evaluate_engine_glow.py --predictions /path/to/predictions.csv.gz --out docs/engine-glow-audit.json
+```
+
+当前 V3 约延迟 5.3、3.9、15.8 秒。最终区间命中 3/3 不代表早期点火能力通过。
+
+生成私下带图报告可先安装 Pillow，再运行 `build_engine_glow_report.py --research /path/to/evidence --video /path/to/spacelens_day_night_full.mp4 --out /path/to/report.html`。该脚本按人工标注提取对比帧，仅生成报告，不参与检测。

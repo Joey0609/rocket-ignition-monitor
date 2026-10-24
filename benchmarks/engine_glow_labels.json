@@ -1,0 +1,35 @@
+{
+  "definition": "First visually observable engine-base glow, bright core, or ignition-induced local illumination. Do not wait for exposed liftoff plume or rocket motion.",
+  "reference_video": "spacelens_day_night_full.mp4",
+  "video_sha256": "a18a9183af1edf066d36f5a774cb8f690ed21d652e7fa41841fd2438e79311e4",
+  "review_fps": 10,
+  "review_resolution": [
+    852,
+    480
+  ],
+  "label_type": "single-reviewer visual annotation, not engine telemetry; clear pre-glow and first definite glow frames bracket a 0.1-0.2s visual uncertainty range",
+  "use": "Offline evaluation only; never passed to detector or used to arm monitoring.",
+  "missions": [
+    {
+      "id": "cz12_day",
+      "name": "长征十二号遥二 · 白天",
+      "mission_start_global_s": 0,
+      "last_no_glow_global_s": 7131.2,
+      "first_glow_global_s": 7131.4
+    },
+    {
+      "id": "cz8a_day",
+      "name": "长征八号甲遥三 · 白天（P1+P2）",
+      "mission_start_global_s": 8674.309,
+      "last_no_glow_global_s": 22012.2,
+      "first_glow_global_s": 22012.3
+    },
+    {
+      "id": "cz8a_night",
+      "name": "长征八号甲遥11 · 夜间",
+      "mission_start_global_s": 25012.385,
+      "last_no_glow_global_s": 33041.1,
+      "first_glow_global_s": 33041.2
+    }
+  ]
+}

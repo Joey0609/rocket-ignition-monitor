@@ -16,3 +16,6 @@ benchmarks/long_evaluation.json
 benchmarks/spacelens_long_test_report.html
 *.001
 *.002
+
+# Exploratory clips and unvalidated detector experiments
+research/

@@ -104,5 +104,6 @@
     "Visual boundary uncertainty totals 11 seconds, not telemetry truth.",
     "Inference uses all10FPS images from the full joined H264 file at320x180; source is not60FPS.",
     "Video has no audio track; only images were downloaded for this task."
-  ]
+  ],
+  "metric_scope": "Historical V3 eventual-interval hit statistics only, superseded for ignition timeliness by engine-glow-audit.json. Do not interpret 3/3 as timely engine ignition detection."
 }
