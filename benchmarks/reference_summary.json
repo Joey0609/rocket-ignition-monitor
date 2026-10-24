@@ -1,0 +1,447 @@
+{
+  "config": {
+    "input": "spacelens_day_night_full.mp4",
+    "sample_fps": 10,
+    "width": 320,
+    "height": 180,
+    "roi": [
+      0.03,
+      0.1,
+      0.8,
+      0.83
+    ],
+    "candidate_threshold": 0.0005,
+    "strong_threshold": 0.01,
+    "segments": [
+      {
+        "id": "cz12_day",
+        "start_s": 0,
+        "end_s": 8674.309,
+        "bvid": "BV1sAtFzbEpo",
+        "pages": [
+          1
+        ]
+      },
+      {
+        "id": "cz8a_day",
+        "start_s": 8674.309,
+        "end_s": 25012.385,
+        "bvid": "BV1WT8qzMEsM",
+        "pages": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "cz8a_night",
+        "start_s": 25012.385,
+        "end_s": 33704.962813,
+        "bvid": "BV1t7hb6GEt4",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "rule": "Same ImageEvidence + correctable FSM; ROI widened to main live picture; no ignition times used to start detector. State reset only between separate missions, NOT between pages of the same mission. Warm-new component >=0.0003 required to reject white venting. Added after false alarm in long CZ12 daytime replay; this is calibration/replay, not blind validation. EMA illumination update alpha0.02 with freeze on strong flame cue; upper-scene edge phase correlation reinitializes on camera translation >2.5px at response>0.25. No time-based arming.",
+    "min_warm_score": 0.0003,
+    "adapt_alpha": 0.02,
+    "camera_guard": true
+  },
+  "config_sha256": "2f962dc801bf8cbb4b4516f196e7e02091f590ac475db1e46d5603fd58403d84",
+  "complete": true,
+  "processed_images": 337049,
+  "sample_fps": 10,
+  "processed_seconds": 33704.9,
+  "wall_seconds": 882.9745554924011,
+  "counts": {
+    "cz12_day": {
+      "images": 86744,
+      "not_ready": 214,
+      "scene_cuts": 50
+    },
+    "cz8a_day": {
+      "images": 163380,
+      "not_ready": 1527,
+      "scene_cuts": 919
+    },
+    "cz8a_night": {
+      "images": 86925,
+      "not_ready": 27,
+      "scene_cuts": 5
+    }
+  },
+  "resets": [
+    {
+      "sample": 0,
+      "global_s": 0.0,
+      "segment": "cz12_day",
+      "reason": "new_launch_mission"
+    },
+    {
+      "sample": 86744,
+      "global_s": 8674.4,
+      "segment": "cz8a_day",
+      "reason": "new_launch_mission"
+    },
+    {
+      "sample": 250124,
+      "global_s": 25012.4,
+      "segment": "cz8a_night",
+      "reason": "new_launch_mission"
+    }
+  ],
+  "events": [
+    {
+      "sample": 3122,
+      "global_s": 312.2,
+      "local_s": 312.2,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0002792776019363247,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 1,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 5600,
+      "global_s": 560.0,
+      "local_s": 560.0,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0002792776019363247,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 2,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 6228,
+      "global_s": 622.8,
+      "local_s": 622.8,
+      "segment": "cz12_day",
+      "score": 0.002792776019363247,
+      "warm_new_score": 0.0007447402718301992,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 3,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 6246,
+      "global_s": 624.6,
+      "local_s": 624.6,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 4,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 6847,
+      "global_s": 684.7,
+      "local_s": 684.7,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 5,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 6861,
+      "global_s": 686.1,
+      "local_s": 686.1,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 6,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 9944,
+      "global_s": 994.4,
+      "local_s": 994.4,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 7,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 13050,
+      "global_s": 1305.0,
+      "local_s": 1305.0,
+      "segment": "cz12_day",
+      "score": 0.0,
+      "warm_new_score": 0.0002792776019363247,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 8,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 71352,
+      "global_s": 7135.2,
+      "local_s": 7135.2,
+      "segment": "cz12_day",
+      "score": 0.01045739465028238,
+      "warm_new_score": 0.008626574815366474,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 9,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 71366,
+      "global_s": 7136.6,
+      "local_s": 7136.6,
+      "segment": "cz12_day",
+      "score": 0.11813442561906536,
+      "warm_new_score": 0.06705765530937752,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 10,
+      "reason": "sustained_strong_evidence"
+    },
+    {
+      "sample": 159909,
+      "global_s": 15990.9,
+      "local_s": 7316.591,
+      "segment": "cz8a_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 1,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 218184,
+      "global_s": 21818.4,
+      "local_s": 13144.091000000002,
+      "segment": "cz8a_day",
+      "score": 0.0017066964562775398,
+      "warm_new_score": 0.0016756656116179481,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 2,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 218196,
+      "global_s": 21819.6,
+      "local_s": 13145.291,
+      "segment": "cz8a_day",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 3,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 220162,
+      "global_s": 22016.2,
+      "local_s": 13341.891000000001,
+      "segment": "cz8a_day",
+      "score": 0.011698628436666046,
+      "warm_new_score": 0.0009929870291069322,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 4,
+      "reason": "sustained_strong_evidence"
+    },
+    {
+      "sample": 254322,
+      "global_s": 25432.2,
+      "local_s": 419.8150000000023,
+      "segment": "cz8a_night",
+      "score": 0.001613603922298765,
+      "warm_new_score": 0.0004654626698938745,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 1,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 254344,
+      "global_s": 25434.4,
+      "local_s": 422.01500000000306,
+      "segment": "cz8a_night",
+      "score": 0.0015825730776391734,
+      "warm_new_score": 0.0005585552038726494,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 2,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 254355,
+      "global_s": 25435.5,
+      "local_s": 423.1150000000016,
+      "segment": "cz8a_night",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 3,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 286281,
+      "global_s": 28628.1,
+      "local_s": 3615.715,
+      "segment": "cz8a_night",
+      "score": 0.0,
+      "warm_new_score": 0.0002792776019363247,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 4,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 286303,
+      "global_s": 28630.3,
+      "local_s": 3617.915000000001,
+      "segment": "cz8a_night",
+      "score": 0.006299261465897102,
+      "warm_new_score": 0.0008068019611493825,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 5,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 286692,
+      "global_s": 28669.2,
+      "local_s": 3656.8150000000023,
+      "segment": "cz8a_night",
+      "score": 0.006144107242599143,
+      "warm_new_score": 0.0006206168931918327,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 6,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 286714,
+      "global_s": 28671.4,
+      "local_s": 3659.015000000003,
+      "segment": "cz8a_night",
+      "score": 0.00626823062123751,
+      "warm_new_score": 0.0004654626698938745,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 7,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 330433,
+      "global_s": 33043.3,
+      "local_s": 8030.9150000000045,
+      "segment": "cz8a_night",
+      "score": 0.02659343387327003,
+      "warm_new_score": 0.01368460249487991,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 8,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 330455,
+      "global_s": 33045.5,
+      "local_s": 8033.115000000002,
+      "segment": "cz8a_night",
+      "score": 0.0026996834853844722,
+      "warm_new_score": 0.0009619561844473407,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 9,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 330477,
+      "global_s": 33047.7,
+      "local_s": 8035.314999999999,
+      "segment": "cz8a_night",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 10,
+      "reason": "strong_evidence_not_sustained"
+    },
+    {
+      "sample": 330494,
+      "global_s": 33049.4,
+      "local_s": 8037.015000000003,
+      "segment": "cz8a_night",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 11,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 330523,
+      "global_s": 33052.3,
+      "local_s": 8039.9150000000045,
+      "segment": "cz8a_night",
+      "score": 0.0,
+      "warm_new_score": 0.0,
+      "state": "COOLDOWN",
+      "event": 0,
+      "action": "candidate_cancelled",
+      "decision_id": 12,
+      "reason": "candidate_disappeared"
+    },
+    {
+      "sample": 330570,
+      "global_s": 33057.0,
+      "local_s": 8044.615000000002,
+      "segment": "cz8a_night",
+      "score": 0.010519456339601564,
+      "warm_new_score": 0.0003723701359150996,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 13,
+      "reason": "sustained_strong_evidence"
+    }
+  ],
+  "evaluation_note": "All confirmed actions count when scoring false alerts, even if later retracted. No ignition time is available to detector."
+}

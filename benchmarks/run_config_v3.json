@@ -1,0 +1,48 @@
+{
+  "input": "spacelens_day_night_full.mp4",
+  "sample_fps": 10,
+  "width": 320,
+  "height": 180,
+  "roi": [
+    0.03,
+    0.1,
+    0.8,
+    0.83
+  ],
+  "candidate_threshold": 0.0005,
+  "strong_threshold": 0.01,
+  "segments": [
+    {
+      "id": "cz12_day",
+      "start_s": 0,
+      "end_s": 8674.309,
+      "bvid": "BV1sAtFzbEpo",
+      "pages": [
+        1
+      ]
+    },
+    {
+      "id": "cz8a_day",
+      "start_s": 8674.309,
+      "end_s": 25012.385,
+      "bvid": "BV1WT8qzMEsM",
+      "pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "cz8a_night",
+      "start_s": 25012.385,
+      "end_s": 33704.962813,
+      "bvid": "BV1t7hb6GEt4",
+      "pages": [
+        1
+      ]
+    }
+  ],
+  "rule": "Same ImageEvidence + correctable FSM; ROI widened to main live picture; no ignition times used to start detector. State reset only between separate missions, NOT between pages of the same mission. Warm-new component >=0.0003 required to reject white venting. Added after false alarm in long CZ12 daytime replay; this is calibration/replay, not blind validation. EMA illumination update alpha0.02 with freeze on strong flame cue; upper-scene edge phase correlation reinitializes on camera translation >2.5px at response>0.25. No time-based arming.",
+  "min_warm_score": 0.0003,
+  "adapt_alpha": 0.02,
+  "camera_guard": true
+}

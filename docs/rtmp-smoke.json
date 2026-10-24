@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "input_fps": 60,
+  "detection_fps": 10,
+  "at_confirmation": {
+    "phase": "running",
+    "state": "CONFIRMED",
+    "event": 1,
+    "frames": 48,
+    "source_seconds": 4.8,
+    "score": 0.1621361633463663,
+    "fps": 6.0,
+    "job_id": "ef1c302fa7c9406d8162cdf83943d696",
+    "source_name": "RTMP 60 FPS smoke",
+    "error": null,
+    "decision_id": 1,
+    "reconnects": 1
+  },
+  "commands": [
+    {
+      "id": 6,
+      "ts": 1792860724.1271286,
+      "kind": "command",
+      "key": "ef1c302fa7c9406d8162cdf83943d696:1:retracted",
+      "status": "ok",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "id": 4,
+      "ts": 1792860724.0954096,
+      "kind": "command",
+      "key": "ef1c302fa7c9406d8162cdf83943d696:1:confirmed",
+      "status": "ok",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "disconnect_phase": "reconnecting"
+}

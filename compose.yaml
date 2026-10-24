@@ -1,0 +1,19 @@
+services:
+  monitor:
+    build: .
+    ports:
+      - "${WEB_BIND:-127.0.0.1}:8000:8000"
+    volumes:
+      - monitor-data:/app/data
+      - ./hooks:/opt/hooks:ro
+    restart: unless-stopped
+    init: true
+  mediamtx:
+    image: bluenviron/mediamtx:1.21.2
+    ports:
+      - "${RTMP_BIND:-127.0.0.1}:1935:1935"
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+    restart: unless-stopped
+volumes:
+  monitor-data:

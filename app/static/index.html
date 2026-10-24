@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ignition · 发射监测台</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div id="login" class="login">
+      <div class="login-card">
+        <div class="brand-mark">↗</div>
+        <p class="eyebrow">IGNITION / MISSION OBSERVER</p>
+        <h1>每一次升空，<br />从这里被看见。</h1>
+        <p class="muted">使用服务器管理令牌进入监测台。</p>
+        <form id="login-form">
+          <label for="token">管理令牌</label
+          ><input
+            id="token"
+            type="password"
+            autocomplete="current-password"
+            required
+            placeholder="粘贴 ADMIN_TOKEN"
+          /><button class="primary" type="submit">
+            进入监测台 <span>↗</span>
+          </button>
+          <p id="login-error" role="alert"></p>
+        </form>
+        <small>令牌保存在服务器 data/admin-token 文件中</small>
+      </div>
+      <div class="orbit-art">
+        <div class="orbit o1"></div>
+        <div class="orbit o2"></div>
+        <div class="orbit o3"></div>
+        <div class="art-cross">＋</div>
+        <p>THE MOMENT<br />OF LIFTOFF.</p>
+        <span>传统视觉 · 时序确认 · 可撤销事件</span>
+      </div>
+    </div>
+    <div id="app" hidden>
+      <header>
+        <a class="brand" href="/"
+          ><span class="brand-mark">↗</span> IGNITION <em>发射监测台</em></a
+        >
+        <div class="top-right">
+          <span id="connection" class="connection"><i></i> 正在连接</span
+          ><button id="logout" class="text-button">退出</button>
+        </div>
+      </header>
+      <main>
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">MISSION OBSERVER / 01</p>
+            <h1>捕捉点火的瞬间<span>.</span></h1>
+            <p class="muted">接入直播或视频，以 10 FPS 持续检查画面。</p>
+          </div>
+          <div class="monitor-badge"><i></i><span id="phase">待接入</span></div>
+        </div>
+        <div class="workspace">
+          <section class="viewer card">
+            <div class="card-header">
+              <h2><span class="tiny-square"></span> 实时画面</h2>
+              <div class="source-badge" id="source-name">NO SIGNAL</div>
+            </div>
+            <div class="screen" id="screen">
+              <img id="preview" alt="视频实时预览" hidden />
+              <div id="roi-box" class="roi-box" hidden>
+                <span>检测区域</span>
+              </div>
+              <div class="placeholder" id="placeholder">
+                <div class="target"><i></i></div>
+                <h3>等待任务接入</h3>
+                <p>选择一个 RTMP 流或上传发射视频</p>
+                <span>视频预览 · 10 FPS</span>
+              </div>
+              <div class="screen-corner top-left"></div>
+              <div class="screen-corner bottom-right"></div>
+              <div class="screen-overlay">
+                <span id="preview-status">STANDBY</span
+                ><span id="video-time">00:00:00</span>
+              </div>
+            </div>
+            <div class="viewer-footer">
+              <div>
+                <i class="signal-icon">▥</i>
+                <span id="preview-caption">画面就绪后显示检测区域</span>
+              </div>
+              <button id="fullscreen" class="text-button" aria-label="全屏预览">
+                ⛶ 全屏
+              </button>
+            </div>
+          </section>
+          <aside class="control card">
+            <div class="card-header">
+              <h2>输入源</h2>
+              <span class="step-label">01 / CONNECT</span>
+            </div>
+            <div class="tabs" role="tablist">
+              <button id="tab-rtmp" role="tab" aria-selected="true">
+                直播流</button
+              ><button id="tab-file" role="tab" aria-selected="false">
+                视频文件
+              </button>
+            </div>
+            <div id="rtmp-panel">
+              <label for="stream-url">RTMP / RTSP 地址</label
+              ><input
+                id="stream-url"
+                type="url"
+                placeholder="rtmp://server/live/rocket"
+              />
+              <p class="field-help">可拉取已有直播，或向配套 RTMP 服务推流。</p>
+            </div>
+            <div id="file-panel" hidden>
+              <label class="dropzone" id="dropzone" for="video-file"
+                ><span class="upload-icon">↥</span
+                ><strong id="file-label">选择或拖入视频文件</strong
+                ><span>MP4 · MOV · MKV · FLV</span
+                ><input
+                  id="video-file"
+                  type="file"
+                  accept="video/*,.mkv,.flv"
+                  hidden /></label
+              ><progress
+                id="upload-progress"
+                max="100"
+                value="0"
+                hidden
+              ></progress>
+            </div>
+            <div class="input-actions">
+              <button id="start" class="primary">
+                开始监测 <span>↗</span></button
+              ><button id="stop" class="secondary" disabled>停止</button>
+            </div>
+            <div class="control-divider"></div>
+            <div class="policy-row">
+              <span class="icon-box">◇</span>
+              <div>
+                <strong>连续证据确认</strong>
+                <p>10 帧中至少 8 帧达到确认阈值</p>
+              </div>
+            </div>
+            <div class="policy-row">
+              <span class="icon-box">↶</span>
+              <div>
+                <strong>误判纠正</strong>
+                <p>短期背景复原复核 + 人工撤销</p>
+              </div>
+            </div>
+            <button id="settings-open" class="settings-link">
+              检测区域与执行指令 <span>↗</span>
+            </button>
+          </aside>
+        </div>
+        <div class="stats">
+          <div class="stat card">
+            <p>识别状态 <span>STATE</span></p>
+            <strong id="state">待机</strong
+            ><small id="state-desc">等待开始一个新的监测任务</small>
+          </div>
+          <div class="stat card">
+            <p>检测采样 <span>FPS</span></p>
+            <strong><b id="fps">0.0</b><em>/ 10 FPS</em></strong
+            ><small><span id="frames">0</span> 帧已检查</small>
+          </div>
+          <div class="stat card">
+            <p>当前视觉证据 <span>EVIDENCE</span></p>
+            <strong><b id="score">0.0000</b></strong
+            ><small>图像证据分数，不代表概率</small>
+          </div>
+          <div class="stat card event-stat">
+            <p>本次点火事件 <span>EVENT</span></p>
+            <strong id="event-value">等待确认</strong
+            ><button id="retract" class="text-button" disabled>
+              误判？撤销此确认 ↶
+            </button>
+          </div>
+        </div>
+        <section class="activity card">
+          <div class="card-header">
+            <div class="activity-title">
+              <h2>任务动态</h2>
+              <span id="event-count" class="count">0</span>
+            </div>
+            <button id="download-events" class="text-button">导出记录 ↓</button>
+          </div>
+          <div id="activity-list" class="activity-list">
+            <div class="empty-events">
+              任务开始后，确认、撤销与指令结果会出现在这里。
+            </div>
+          </div>
+        </section>
+        <footer>
+          <span>IGNITION MONITOR</span
+          ><span>传统视觉检测 · 事件可追踪 · 指令执行可审计</span
+          ><span>v1.0</span>
+        </footer>
+      </main>
+    </div>
+    <dialog id="settings">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">MISSION CONFIGURATION</p>
+          <h2>任务配置</h2>
+        </div>
+        <button id="settings-close" class="close" aria-label="关闭配置">
+          ×
+        </button>
+      </div>
+      <form id="settings-form">
+        <p class="field-help">配置应用于下一次监测。调整前请先停止当前任务。</p>
+        <fieldset>
+          <legend>检测区域</legend>
+          <p class="field-help">
+            归一化坐标 0–1；保留区域外背景，用于曝光补偿。
+          </p>
+          <div class="four-col">
+            <label
+              >X₁<input
+                id="roi-0"
+                type="number"
+                step=".01"
+                min="0"
+                max="1"
+                required /></label
+            ><label
+              >Y₁<input
+                id="roi-1"
+                type="number"
+                step=".01"
+                min="0"
+                max="1"
+                required /></label
+            ><label
+              >X₂<input
+                id="roi-2"
+                type="number"
+                step=".01"
+                min="0"
+                max="1"
+                required /></label
+            ><label
+              >Y₂<input
+                id="roi-3"
+                type="number"
+                step=".01"
+                min="0"
+                max="1"
+                required
+            /></label>
+          </div>
+          <div class="three-col">
+            <label
+              >候选阈值<input
+                id="candidate-threshold"
+                type="number"
+                step=".0001"
+                min=".000001"
+                max="1"
+                required /></label
+            ><label
+              >确认阈值<input
+                id="strong-threshold"
+                type="number"
+                step=".001"
+                min=".000001"
+                max="1"
+                required /></label
+            ><label
+              >暖色阈值<input
+                id="warm-threshold"
+                type="number"
+                step=".0001"
+                min="0"
+                max="1"
+                required
+            /></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>事件指令</legend>
+          <label class="switch-label"
+            ><input id="commands-enabled" type="checkbox" /> 启用事件指令</label
+          >
+          <p class="field-help">
+            指令在服务器的 /bin/sh 执行；Docker
+            部署时在容器内执行。保存配置不会运行指令。
+          </p>
+          <label for="confirm-command">确认点火时</label
+          ><textarea
+            id="confirm-command"
+            rows="2"
+            placeholder="例如：/opt/hooks/on-ignition.sh"
+          ></textarea
+          ><label for="retract-command">撤销确认时</label
+          ><textarea
+            id="retract-command"
+            rows="2"
+            placeholder="例如：/opt/hooks/on-retract.sh"
+          ></textarea
+          ><label
+            >超时（秒）<input
+              id="command-timeout"
+              type="number"
+              min="1"
+              max="120"
+              required
+          /></label>
+          <p class="field-help">
+            每个确认 / 撤销事件最多派发一次。撤销指令用于补偿已执行的操作。
+          </p>
+        </fieldset>
+        <button class="primary" type="submit">保存配置 <span>✓</span></button>
+      </form>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

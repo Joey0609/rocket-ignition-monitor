@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "http": true,
+  "cookie_auth": true,
+  "websocket": true,
+  "mjpeg_jpeg": true,
+  "upload_decode": true,
+  "confirmed_events": 1,
+  "retracted_events": 1,
+  "commands_executed_once": true
+}

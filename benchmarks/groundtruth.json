@@ -1,0 +1,23 @@
+{
+  "policy": "Visual review only; no engine telemetry. Conservative pre-ignition limit and later clearly-fired limit bracket uncertainty. Never passed to detector. Replays after live ignition do not count as pre-launch alerts.",
+  "missions": [
+    {
+      "id": "cz12_day",
+      "prelaunch_end_local_s": 7131.0,
+      "ignition_visible_by_local_s": 7135.0,
+      "note": "First faint base flash is between 7131 and 7132; clear plume by7135."
+    },
+    {
+      "id": "cz8a_day",
+      "prelaunch_end_local_s": 13337.04,
+      "ignition_visible_by_local_s": 13341.04,
+      "note": "Mission-local time includes all P1; P2 base first glows after6118 and clear launch by6122."
+    },
+    {
+      "id": "cz8a_night",
+      "prelaunch_end_local_s": 8028.0,
+      "ignition_visible_by_local_s": 8031.0,
+      "note": "First bright base flash between8028 and8029; flame/plume by8031."
+    }
+  ]
+}

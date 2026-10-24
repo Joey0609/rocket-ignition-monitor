@@ -1,0 +1,108 @@
+{
+  "totals": {
+    "video_seconds": 33704.9,
+    "processed_images": 337049,
+    "fps": 10,
+    "prelaunch_seconds": 28496.04,
+    "uncertain_boundary_seconds": 11.0,
+    "pre_images": 284960,
+    "pre_unknown_images": 208,
+    "pre_confirmed_false_alerts": 0,
+    "pre_positive_images": 0,
+    "hit_missions": 3,
+    "total_missions": 3
+  },
+  "missions": [
+    {
+      "id": "cz12_day",
+      "name": "长征十二号遥二 · 白天",
+      "bvid": "BV1sAtFzbEpo",
+      "pages": [
+        1
+      ],
+      "duration_s": 8674.309,
+      "prelaunch_s": 7131.0,
+      "uncertain_boundary_s": 4.0,
+      "images": 86744,
+      "pre_images": 71310,
+      "pre_unknown_images": 179,
+      "pre_positive_images": 0,
+      "pre_candidate_cancellations": 8,
+      "pre_confirmed_alerts": [],
+      "valid_after_confirmations": [
+        {
+          "sample": 71366,
+          "global_s": 7136.6,
+          "local_s": 7136.6,
+          "decision_id": 10
+        }
+      ],
+      "retracted_alerts": 0,
+      "pre_observable_fraction": 0.9974898331229841
+    },
+    {
+      "id": "cz8a_day",
+      "name": "长征八号甲遥三 · 白天（P1+P2）",
+      "bvid": "BV1WT8qzMEsM",
+      "pages": [
+        1,
+        2
+      ],
+      "duration_s": 16338.076,
+      "prelaunch_s": 13337.04,
+      "uncertain_boundary_s": 4.0,
+      "images": 163380,
+      "pre_images": 133370,
+      "pre_unknown_images": 21,
+      "pre_positive_images": 0,
+      "pre_candidate_cancellations": 3,
+      "pre_confirmed_alerts": [],
+      "valid_after_confirmations": [
+        {
+          "sample": 220162,
+          "global_s": 22016.2,
+          "local_s": 13341.891,
+          "decision_id": 4
+        }
+      ],
+      "retracted_alerts": 0,
+      "pre_observable_fraction": 0.9998425433005923
+    },
+    {
+      "id": "cz8a_night",
+      "name": "长征八号甲遥11 · 夜间",
+      "bvid": "BV1t7hb6GEt4",
+      "pages": [
+        1
+      ],
+      "duration_s": 8692.577813,
+      "prelaunch_s": 8028.0,
+      "uncertain_boundary_s": 3.0,
+      "images": 86925,
+      "pre_images": 80280,
+      "pre_unknown_images": 8,
+      "pre_positive_images": 0,
+      "pre_candidate_cancellations": 7,
+      "pre_confirmed_alerts": [],
+      "valid_after_confirmations": [
+        {
+          "sample": 330570,
+          "global_s": 33057.0,
+          "local_s": 8044.615,
+          "decision_id": 13
+        }
+      ],
+      "retracted_alerts": 0,
+      "pre_observable_fraction": 0.9999003487792726
+    }
+  ],
+  "strict_false_alert_rule": "Every confirmed action before earliest visible ignition counts, including ones later retracted. Candidate cancellations are not emitted alerts.",
+  "limitations": [
+    "Rules revised after seeing false alarms in these same videos; this is a fitted full replay, not unseen-source validation.",
+    "Finite observation cannot guarantee zero false alerts in future RTMP streams.",
+    "Warmup/camera-change images return unknown, and are disclosed; no ignition-time-based arming.",
+    "Visual boundary uncertainty totals 11 seconds, not telemetry truth.",
+    "Inference uses all10FPS images from the full joined H264 file at320x180; source is not60FPS.",
+    "Video has no audio track; only images were downloaded for this task."
+  ]
+}

@@ -1,0 +1,12 @@
+# Publish/read a single local mission path. Bind 1935 to a trusted interface.
+logLevel: warn
+rtmp: yes
+rtmpAddress: :1935
+rtsp: no
+hls: no
+webrtc: no
+srt: no
+moq: no
+paths:
+  rocket:
+    source: publisher

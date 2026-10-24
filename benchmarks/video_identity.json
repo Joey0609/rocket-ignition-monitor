@@ -1,0 +1,14 @@
+{
+  "filename": "spacelens_day_night_full.mp4",
+  "bytes": 918125435,
+  "sha256": "a18a9183af1edf066d36f5a774cb8f690ed21d652e7fa41841fd2438e79311e4",
+  "codec": "H264",
+  "resolution": [
+    852,
+    480
+  ],
+  "audio_included": false,
+  "duration_s": 33704.913,
+  "source_missions": 3,
+  "source_parts": 4
+}

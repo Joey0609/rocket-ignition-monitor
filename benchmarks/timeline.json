@@ -1,0 +1,70 @@
+{
+  "parts": [
+    {
+      "bvid": "BV1sAtFzbEpo",
+      "page": 1,
+      "cid": 31519146968,
+      "path": "raw/BV1sAtFzbEpo_p01.mp4",
+      "duration_s": 8674.309,
+      "bytes": 380784644,
+      "sha256": "f3e6114f38a708e8285f18133b826680490d054ef78c83212cc5c4ac7641df49",
+      "width": 852,
+      "height": 480,
+      "page_url": "https://www.bilibili.com/video/BV1sAtFzbEpo/?p=1",
+      "audio_included": false,
+      "global_start_s": 0,
+      "global_end_s": 8674.309,
+      "mission": "cz12_day"
+    },
+    {
+      "bvid": "BV1WT8qzMEsM",
+      "page": 1,
+      "cid": 31384407674,
+      "path": "raw/BV1WT8qzMEsM_p01.mp4",
+      "duration_s": 7219.04,
+      "bytes": 189050251,
+      "sha256": "9a5e7567d3cd2b98f0d3af181f07b2b13d79064b3954575774b31e407d91ada1",
+      "width": 852,
+      "height": 480,
+      "page_url": "https://www.bilibili.com/video/BV1WT8qzMEsM/?p=1",
+      "audio_included": false,
+      "global_start_s": 8674.309,
+      "global_end_s": 15893.348999999998,
+      "mission": "cz8a_day"
+    },
+    {
+      "bvid": "BV1WT8qzMEsM",
+      "page": 2,
+      "cid": 31384407854,
+      "path": "raw/BV1WT8qzMEsM_p02.mp4",
+      "duration_s": 9119.036,
+      "bytes": 246782889,
+      "sha256": "0dc21a52599f6f889cdb9fa228f93eab0160e3597fcd1e398fa6abede3c996ff",
+      "width": 852,
+      "height": 480,
+      "page_url": "https://www.bilibili.com/video/BV1WT8qzMEsM/?p=2",
+      "audio_included": false,
+      "global_start_s": 15893.348999999998,
+      "global_end_s": 25012.385,
+      "mission": "cz8a_day"
+    },
+    {
+      "bvid": "BV1t7hb6GEt4",
+      "page": 1,
+      "cid": 42142730360,
+      "path": "raw/BV1t7hb6GEt4_p01.mp4",
+      "duration_s": 8692.577813,
+      "bytes": 96308257,
+      "sha256": "7572013adc8dd657198772016b4e7e3b211bf7db16fbe2d1db112a3d9b0e2d31",
+      "width": 852,
+      "height": 480,
+      "page_url": "https://www.bilibili.com/video/BV1t7hb6GEt4/?p=1",
+      "audio_included": false,
+      "global_start_s": 25012.385,
+      "global_end_s": 33704.962813,
+      "mission": "cz8a_night"
+    }
+  ],
+  "total_seconds": 33704.962813,
+  "audio_included": false
+}
