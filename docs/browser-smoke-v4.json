@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-25",
+  "ok": true,
+  "environment": "Actual Chrome browser connected to isolated Python 3.12.3 + FFmpeg + FastAPI preview; application backend and frontend are real, not mocked.",
+  "authentication": "Disposable test session created by a QA-only fixture through the real /api/login API. Browser token entry was not exercised. No production authentication changes.",
+  "form_before_fix": {
+    "candidate_threshold_default": 0.0005,
+    "strong_threshold_default": 0.001,
+    "min": 1e-06,
+    "candidate_step": 0.0001,
+    "strong_step": 0.001,
+    "native_step_mismatch": true
+  },
+  "form_after_fix": {
+    "score_step": "any",
+    "engine_defaults_saved": true,
+    "legacy_custom_thresholds_saved_and_reopened": [
+      0.000125,
+      0.00125,
+      0.00035
+    ],
+    "range_and_backend_validation_retained": true
+  },
+  "preview": {
+    "natural_width": 480,
+    "natural_height": 270,
+    "mjpeg_loaded": true,
+    "roi_overlay_visible": true,
+    "point_notification_visible": true
+  },
+  "cases": [
+    {
+      "case": "cz12_excerpt_manual_retraction",
+      "decoded_images": 100,
+      "confirmed_source_seconds": 7.6,
+      "retracted_source_seconds": 9.9,
+      "retraction_reason": "explicit_false_alarm_feedback",
+      "confirm_command_count": 1,
+      "retract_command_count": 1,
+      "command_exit_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "synthetic_automatic_retraction",
+      "decoded_images": 100,
+      "confirmed_source_seconds": 6.2,
+      "retracted_source_seconds": 7.4,
+      "retraction_reason": "sustained_return_to_preignition_background",
+      "confirm_command_count": 1,
+      "retract_command_count": 1,
+      "command_exit_codes": [
+        0,
+        0
+      ]
+    }
+  ],
+  "hook_trace": "CRCR",
+  "event_export": {
+    "download_verified": true,
+    "records": 15,
+    "sha256": "fce36da15fa9cc189c00f91d738ee6e1aab6abfaf57f041a609955033316a3d6"
+  },
+  "desktop_horizontal_overflow": false,
+  "source_hashes": {
+    "engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3"
+  },
+  "accuracy_scope": "Browser integration checks only. The real excerpt reuses the existing CZ12 calibration footage; synthetic flash is not a launch-accuracy sample. Full 337049-image evaluation was not rerun for this HTML-only fix.",
+  "not_verified": [
+    "Browser credential entry",
+    "Mobile device",
+    "Docker image build",
+    "Long-term multi-user concurrency"
+  ],
+  "application_source_matches_checkout": true
+}
