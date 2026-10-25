@@ -141,12 +141,12 @@ def test_manual_retraction_exactly_once(tmp_path):
     m.commands.close()
 
 
-def make_video(path, seconds=3):
+def make_video(path, seconds=8):
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 10, (320, 180))
     for i in range(seconds * 10):
         frame = np.zeros((180, 320, 3), np.uint8) + 20
-        if i >= 15:
-            cv2.rectangle(frame, (90, 90), (200, 140), (0, 180, 255), -1)
+        if i >= 60:
+            cv2.rectangle(frame, (146, 146), (168, 158), (0, 180, 255), -1)
         writer.write(frame)
     writer.release()
 
@@ -168,9 +168,9 @@ def test_real_decode_upload_eof_and_job_config_lock(client, tmp_path):
     )
     wait_until(lambda: client.get("/api/status").json()["frames"] >= 3)
     assert client.put("/api/config", json={}).status_code == 409
-    wait_until(lambda: client.get("/api/status").json()["phase"] == "ended", 7)
+    wait_until(lambda: client.get("/api/status").json()["phase"] == "ended", 12)
     s = client.get("/api/status").json()
-    assert s["frames"] == 30
+    assert s["frames"] == 80
     assert client.module.monitor.jpeg.startswith(b"\xff\xd8")
     assert sum(e["kind"] == "confirmed" for e in client.get("/api/events").json()) == 1
     assert client.post("/api/retract").status_code == 200
@@ -222,10 +222,10 @@ def test_input_protocols(url):
 def test_video_automatic_correction_dispatches_compensation(tmp_path):
     path = tmp_path / "false-flame.mp4"
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 10, (320, 180))
-    for i in range(60):
+    for i in range(85):
         frame = np.zeros((180, 320, 3), np.uint8) + 20
-        if 15 <= i < 33:
-            cv2.rectangle(frame, (90, 90), (200, 140), (0, 180, 255), -1)
+        if 60 <= i < 67:
+            cv2.rectangle(frame, (146, 146), (168, 158), (0, 180, 255), -1)
         writer.write(frame)
     writer.release()
     store = Store(tmp_path / "data")
@@ -241,7 +241,7 @@ def test_video_automatic_correction_dispatches_compensation(tmp_path):
     monitor = Monitor(store)
     try:
         monitor.start(str(path), "synthetic correction")
-        wait_until(lambda: monitor.snapshot()["phase"] == "ended", 10)
+        wait_until(lambda: monitor.snapshot()["phase"] == "ended", 13)
         wait_until(
             lambda: len([e for e in store.events() if e["kind"] == "command"]) == 2
         )

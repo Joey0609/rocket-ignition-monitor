@@ -17,9 +17,15 @@ import cv2
 import numpy as np
 
 from .camera_guard import CameraGuard
-from .detector import ImageEvidence, IgnitionFSM
+from .detector import IgnitionFSM, ImageEvidence
+from .engine_glow import EngineGlowPipeline, make_engine_fsm
 
 DEFAULTS = {
+    "detector_mode": "engine_glow",
+    "engine_roi": [0.47, 0.79, 0.55, 0.91],
+    "engine_candidate_threshold": 0.0005,
+    "engine_strong_threshold": 0.001,
+    "auto_viewport": True,
     "roi": [0.03, 0.10, 0.80, 0.83],
     "candidate_threshold": 0.0005,
     "strong_threshold": 0.01,
@@ -45,7 +51,15 @@ class Store:
         )
         self.db.commit()
         p = self.root / "config.json"
-        self.config = DEFAULTS | (json.loads(p.read_text()) if p.exists() else {})
+        saved = json.loads(p.read_text()) if p.exists() else {}
+        self.config = DEFAULTS | saved
+        if saved and "detector_mode" not in saved:
+            self.save(self.config)
+            self.event(
+                "config_migrated",
+                detector_mode="engine_glow",
+                reason="Legacy ROI and thresholds preserved separately; check the engine ROI.",
+            )
 
     def save(self, config):
         with self.lock:
@@ -205,6 +219,7 @@ class Monitor:
             "phase": "idle",
             "state": "IDLE",
             "event": None,
+            "confirmed_latched": False,
             "frames": 0,
             "source_seconds": 0,
             "score": 0,
@@ -244,16 +259,26 @@ class Monitor:
             config = copy.deepcopy(self.store.config)
             job = uuid.uuid4().hex
             with self.lock:
-                self.fsm = IgnitionFSM(
-                    config["candidate_threshold"], config["strong_threshold"]
+                self.fsm = (
+                    make_engine_fsm(
+                        config["engine_candidate_threshold"],
+                        config["engine_strong_threshold"],
+                    )
+                    if config["detector_mode"] == "engine_glow"
+                    else IgnitionFSM(
+                        config["candidate_threshold"], config["strong_threshold"]
+                    )
                 )
                 self.job_config = config
                 self.jpeg = None
                 self.frame_id += 1
                 self.status = {
                     "phase": "connecting",
+                    "detector_mode": config["detector_mode"],
+                    "active_roi": None,
                     "state": "WARMUP",
                     "event": None,
+                    "confirmed_latched": False,
                     "frames": 0,
                     "source_seconds": 0,
                     "score": 0,
@@ -289,7 +314,10 @@ class Monitor:
             t = (self.fsm.last_timestamp or 0) + 0.000001
             result = self.fsm.update(0, t, false_alarm=True)
             self.status.update(
-                state=result.state, event=result.event, decision_id=result.decision_id
+                state=result.state,
+                event=result.event,
+                decision_id=result.decision_id,
+                confirmed_latched=self.fsm.confirmed,
             )
             self._action(result, self.status["source_seconds"])
             return self.snapshot()
@@ -300,11 +328,21 @@ class Monitor:
         started = time.monotonic()
         last_frame = None
         reconnects = 0
-        timestamp = 0.0
+        timestamp = -0.1
         ev = None
         guard = None
+        engine_mode = config["detector_mode"] == "engine_glow"
+        width, height = (480, 270) if engine_mode else (320, 180)
+
+        def new_evidence():
+            return (
+                EngineGlowPipeline(config["engine_roi"], config["auto_viewport"])
+                if engine_mode
+                else ImageEvidence(config["roi"], adapt_alpha=0.02)
+            )
+
         while not self.stop_event.is_set():
-            ev = ImageEvidence(config["roi"], adapt_alpha=0.02)
+            ev = new_evidence()
             guard = CameraGuard()
             opts = (
                 [
@@ -335,7 +373,7 @@ class Monitor:
                 source,
                 "-an",
                 "-vf",
-                "fps=10,scale=320:180",
+                f"fps=10,scale={width}:{height}",
                 "-pix_fmt",
                 "bgr24",
                 "-f",
@@ -349,27 +387,36 @@ class Monitor:
                 with self.lock:
                     self.proc = proc
                 while not self.stop_event.is_set():
-                    data = proc.stdout.read(320 * 180 * 3)
+                    data = proc.stdout.read(width * height * 3)
                     if not data:
                         break
-                    if len(data) != 320 * 180 * 3:
+                    if len(data) != width * height * 3:
                         raise RuntimeError("incomplete video frame")
-                    frame = np.frombuffer(data, np.uint8).reshape(180, 320, 3)
-                    changed = guard.update(frame)
-                    if changed:
-                        ev = ImageEvidence(config["roi"], adapt_alpha=0.02)
-                    features = ev.update(frame)
-                    score = (
-                        features["novel_score"]
-                        if features["warm_new_score"] >= config["min_warm_score"]
-                        else 0
-                    )
+                    frame = np.frombuffer(data, np.uint8).reshape(height, width, 3)
+                    if engine_mode:
+                        features = ev.update(frame)
+                        changed = features["scene_cut"]
+                        score = features["score"]
+                    else:
+                        changed = guard.update(frame)
+                        if changed:
+                            ev = new_evidence()
+                        features = ev.update(frame)
+                        score = (
+                            features["novel_score"]
+                            if features["warm_new_score"] >= config["min_warm_score"]
+                            else 0
+                        )
                     now = time.monotonic()
                     # Media frame order establishes 10 FPS evidence; wall gaps invalidate the FSM.
                     with self.lock:
-                        if last_frame is not None and now - last_frame > 0.35:
+                        if (
+                            is_stream
+                            and last_frame is not None
+                            and now - last_frame > 0.35
+                        ):
                             timestamp += now - last_frame
-                            ev = ImageEvidence(config["roi"], adapt_alpha=0.02)
+                            ev = new_evidence()
                             features["ready"] = False
                         timestamp = max(
                             timestamp + 0.1, (self.fsm.last_timestamp or -1) + 0.1
@@ -386,15 +433,18 @@ class Monitor:
                             phase="running",
                             state=result.state,
                             event=result.event,
+                            confirmed_latched=self.fsm.confirmed,
                             frames=count,
-                            source_seconds=round(count / 10, 1),
+                            source_seconds=round((count - 1) / 10, 1),
                             score=score,
                             fps=round(count / max(0.1, now - started), 1),
                             decision_id=result.decision_id,
                             error=None,
                             reconnects=reconnects,
+                            active_roi=features.get("active_roi", config["roi"]),
+                            analysis_resolution=[width, height],
                         )
-                        self._action(result, count / 10)
+                        self._action(result, (count - 1) / 10)
                         ok, jpg = cv2.imencode(
                             ".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 85]
                         )

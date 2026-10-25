@@ -1,15 +1,26 @@
 """图片区间检测：只确认检出与撤销，不估计点火起点。"""
 
-import argparse, json, pathlib
+import argparse
+import json
+import pathlib
 from dataclasses import asdict
+
 import cv2
-from app.detector import ImageEvidence, IgnitionFSM
+
+from app.detector import IgnitionFSM, ImageEvidence
+from app.engine_glow import EngineGlowPipeline, make_engine_fsm
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("folder", type=pathlib.Path)
-    p.add_argument("--roi", required=True, help="x1,y1,x2,y2，0~1归一化，框住喷口下方")
+    p.add_argument(
+        "--detector-mode", choices=["engine_glow", "legacy"], default="engine_glow"
+    )
+    p.add_argument("--no-auto-viewport", action="store_true")
+    p.add_argument(
+        "--roi", required=True, help="x1,y1,x2,y2，0~1归一化，框住喷口与邻近照亮区域"
+    )
     p.add_argument(
         "--fps", type=float, default=10, help="图片序列的采样速率，不是原始视频FPS"
     )
@@ -18,7 +29,7 @@ def main():
     p.add_argument(
         "--strong-threshold",
         type=float,
-        default=0.05,
+        default=None,
         help="连续确认阈值，按机位和误报样本校准",
     )
     p.add_argument(
@@ -27,7 +38,7 @@ def main():
         help='可选误报反馈JSON，例如 [{"sample_index":25}]',
     )
     p.add_argument(
-        "--reference", type=pathlib.Path, help="同机位点火前参考图，建议提供"
+        "--reference", type=pathlib.Path, help="仅旧版模式：同机位点火前参考图"
     )
     p.add_argument(
         "--out", type=pathlib.Path, default=pathlib.Path("image_predictions.json")
@@ -42,8 +53,32 @@ def main():
     )
     if not files:
         p.error("No images found")
-    roi = list(map(float, a.roi.split(",")))
-    ev = ImageEvidence(roi, 1 if a.reference else 8)
+    try:
+        roi = list(map(float, a.roi.split(",")))
+    except ValueError:
+        p.error("--roi must contain four numbers")
+    if len(roi) != 4 or not (0 <= roi[0] < roi[2] <= 1 and 0 <= roi[1] < roi[3] <= 1):
+        p.error("--roi must be ordered normalized x1,y1,x2,y2")
+    cv2.setNumThreads(1)
+    engine_mode = a.detector_mode == "engine_glow"
+    if engine_mode and abs(a.fps - 10) > 1e-9:
+        p.error("Engine mode expects a 10 FPS sampled image sequence")
+    if engine_mode and a.reference:
+        p.error(
+            "Engine mode uses the first 50 sequence frames for background; --reference is legacy-only"
+        )
+    strong = (
+        a.strong_threshold
+        if a.strong_threshold is not None
+        else (0.001 if engine_mode else 0.05)
+    )
+    if not 0 < a.threshold <= strong <= 1:
+        p.error("Thresholds must satisfy 0 < candidate <= strong <= 1")
+    ev = (
+        EngineGlowPipeline(roi, not a.no_auto_viewport)
+        if engine_mode
+        else ImageEvidence(roi, 1 if a.reference else 8)
+    )
     ref_shape = None
     if a.reference:
         ref = cv2.imread(str(a.reference))
@@ -51,7 +86,11 @@ def main():
             raise FileNotFoundError(a.reference)
         ref_shape = ref.shape
         ev.update(ref)
-    fsm = IgnitionFSM(a.threshold, strong=a.strong_threshold)
+    fsm = (
+        make_engine_fsm(a.threshold, strong)
+        if engine_mode
+        else IgnitionFSM(a.threshold, strong=strong)
+    )
     rows = []
     updates = []
     active = {}
@@ -66,9 +105,11 @@ def main():
             raise FileNotFoundError(file)
         if ref_shape is not None and bgr.shape != ref_shape:
             raise ValueError("Reference and all images must match dimensions")
+        if engine_mode:
+            bgr = cv2.resize(bgr, (480, 270), interpolation=cv2.INTER_LINEAR)
         features = ev.update(bgr)
         state = fsm.update(
-            features[a.method + "_score"],
+            features["score"] if engine_mode else features[a.method + "_score"],
             i / a.fps,
             features["ready"],
             features["scene_cut"],
@@ -97,7 +138,8 @@ def main():
         "updates": updates,
         "predictions": rows,
         "score_is_probability": False,
-        "notes": "Success means at least one non-retracted confirmation in the image interval. No ignition-onset estimation, RTMP, video input or liftoff confirmation. Need fixed camera and ignition-free baseline.",
+        "detector_mode": a.detector_mode,
+        "notes": "Engine mode checks initial engine glow and bright cores, without requiring liftoff. interval_detected is only an eventual-hit summary; updates give actual confirmation times, never backdated. Need an ignition-free background prefix (50 frames in engine mode).",
     }
     a.out.write_text(json.dumps(output, indent=2, ensure_ascii=False))
     print(

@@ -94,6 +94,8 @@ class StateBehavior(unittest.TestCase):
                         pathlib.Path(__file__).resolve().parent.parent / "run_images.py"
                     ),
                     str(frames),
+                    "--detector-mode",
+                    "legacy",
                     "--roi",
                     "0.25,0.25,0.75,0.75",
                     "--out",

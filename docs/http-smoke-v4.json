@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "http": true,
+  "cookie_auth": true,
+  "websocket": true,
+  "mjpeg_jpeg": true,
+  "upload_decode": true,
+  "confirmed_events": 1,
+  "retracted_events": 1,
+  "commands_executed_once": true,
+  "source_hashes": {
+    "engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3"
+  }
+}

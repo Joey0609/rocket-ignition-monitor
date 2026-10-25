@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "input_fps": 60,
+  "detection_fps": 10,
+  "at_confirmation": {
+    "phase": "running",
+    "detector_mode": "engine_glow",
+    "active_roi": [
+      0.47,
+      0.79,
+      0.55,
+      0.91
+    ],
+    "state": "CONFIRMED",
+    "event": 1,
+    "confirmed_latched": true,
+    "frames": 83,
+    "source_seconds": 8.2,
+    "score": 0.215311004784689,
+    "fps": 7.1,
+    "job_id": "1bf93bb0889841738b5963e23297180d",
+    "source_name": "RTMP 60 FPS smoke",
+    "error": null,
+    "decision_id": 1,
+    "reconnects": 1,
+    "analysis_resolution": [
+      480,
+      270
+    ]
+  },
+  "commands": [
+    {
+      "id": 6,
+      "ts": 1792899163.75501,
+      "kind": "command",
+      "key": "1bf93bb0889841738b5963e23297180d:1:retracted",
+      "status": "ok",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "id": 5,
+      "ts": 1792899163.7459505,
+      "kind": "command",
+      "key": "1bf93bb0889841738b5963e23297180d:1:confirmed",
+      "status": "ok",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "disconnect_phase": "reconnecting",
+  "source_hashes": {
+    "engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3"
+  }
+}

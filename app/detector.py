@@ -153,14 +153,34 @@ class IgnitionFSM:
     火焰被烟雾遮住或离开ROI并不等于事件从未发生，不单凭低分撤销。
     """
 
-    def __init__(self, high=0.0005, strong=0.05, low=None, review_seconds=3.0):
+    def __init__(
+        self,
+        high=0.0005,
+        strong=0.05,
+        low=None,
+        review_seconds=3.0,
+        confirm_window=10,
+        confirm_hits=8,
+        min_confirm_seconds=0.6,
+        defer_timeout_on_strong=False,
+    ):
         if high <= 0 or strong < high:
             raise ValueError("0 < high <= strong required")
+        if (
+            confirm_window < 4
+            or not 1 <= confirm_hits <= confirm_window
+            or min_confirm_seconds < 0
+        ):
+            raise ValueError("Invalid confirmation window")
         self.high = high
         self.strong = strong
         self.low = high * 0.65 if low is None else low
         self.review_seconds = review_seconds
-        self.window = deque(maxlen=10)
+        self.defer_timeout_on_strong = defer_timeout_on_strong
+        self.confirm_window = confirm_window
+        self.confirm_hits = confirm_hits
+        self.min_confirm_seconds = min_confirm_seconds
+        self.window = deque(maxlen=confirm_window)
         self.clear_window = deque(maxlen=8)
         self.last_timestamp = None
         self.state = "WARMUP"
@@ -251,18 +271,20 @@ class IgnitionFSM:
             self.candidate_since = timestamp
         self.state = "VERIFYING"
         if (
-            len(self.window) == 10
-            and sum(x[2] for x in self.window) >= 8
+            len(self.window) == self.confirm_window
+            and sum(x[2] for x in self.window) >= self.confirm_hits
             and score >= self.strong
         ):
-            if timestamp - self.window[0][0] >= 0.6:
+            if timestamp - self.window[0][0] >= self.min_confirm_seconds - 1e-9:
                 self.confirmed = True
                 self.confirmed_at = timestamp
                 self.state = "CONFIRMED"
                 return self._result("confirmed", "sustained_strong_evidence")
         if sum(x[1] for x in short) == 0:
             return self._cancel(timestamp, False, "candidate_disappeared")
-        if timestamp - self.candidate_since >= 1.5:
+        if timestamp - self.candidate_since >= 1.5 and not (
+            self.defer_timeout_on_strong and any(x[2] for x in short)
+        ):
             return self._cancel(timestamp, False, "strong_evidence_not_sustained")
         return self._result()
 

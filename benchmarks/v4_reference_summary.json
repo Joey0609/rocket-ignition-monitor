@@ -1,0 +1,117 @@
+{
+  "complete": true,
+  "video_sha256": "a18a9183af1edf066d36f5a774cb8f690ed21d652e7fa41841fd2438e79311e4",
+  "processed_images": 337049,
+  "processed_seconds": 33704.9,
+  "sample_fps": 10,
+  "events": [
+    {
+      "sample": 71316,
+      "global_s": 7131.6,
+      "local_s": 7131.6,
+      "segment": "cz12_day",
+      "score": 0.03349282296650718,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 1,
+      "reason": "sustained_strong_evidence"
+    },
+    {
+      "sample": 220127,
+      "global_s": 22012.7,
+      "local_s": 13338.391000000001,
+      "segment": "cz8a_day",
+      "score": 0.008771929824561403,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 1,
+      "reason": "sustained_strong_evidence"
+    },
+    {
+      "sample": 330415,
+      "global_s": 33041.5,
+      "local_s": 8029.115000000002,
+      "segment": "cz8a_night",
+      "score": 0.09888357256778309,
+      "state": "CONFIRMED",
+      "event": 1,
+      "action": "confirmed",
+      "decision_id": 1,
+      "reason": "sustained_strong_evidence"
+    }
+  ],
+  "counts": {
+    "cz12_day": {
+      "images": 86744,
+      "unknown": 6540,
+      "scene_cuts": 628
+    },
+    "cz8a_day": {
+      "images": 163380,
+      "unknown": 2479,
+      "scene_cuts": 257
+    },
+    "cz8a_night": {
+      "images": 86925,
+      "unknown": 4120,
+      "scene_cuts": 238
+    }
+  },
+  "source_hashes": {
+    "engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3"
+  },
+  "config": {
+    "segments": [
+      {
+        "id": "cz12_day",
+        "start_s": 0,
+        "end_s": 8674.309,
+        "bvid": "BV1sAtFzbEpo",
+        "pages": [
+          1
+        ]
+      },
+      {
+        "id": "cz8a_day",
+        "start_s": 8674.309,
+        "end_s": 25012.385,
+        "bvid": "BV1WT8qzMEsM",
+        "pages": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "cz8a_night",
+        "start_s": 25012.385,
+        "end_s": 33704.962813,
+        "bvid": "BV1t7hb6GEt4",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "roi": [
+      0.47,
+      0.79,
+      0.55,
+      0.91
+    ],
+    "strong": 0.001,
+    "resolution": [
+      480,
+      270
+    ],
+    "confirm_hits": 3,
+    "confirm_window": 4,
+    "min_confirm_seconds": 0.2,
+    "warmup_frames": 50,
+    "reacquire_frames": 20
+  },
+  "wall_seconds": 1522.0318113249996,
+  "execution": "Independent launch missions processed in parallel; same-launch pages never reset. copyts + fps before trim preserves global sampled-frame grid.",
+  "predictions_sha256": "dd3dbfb5547a260d8c368d17a314a36ff0a593e1ff3de4c6767799a19bfee8ec"
+}

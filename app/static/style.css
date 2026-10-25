@@ -1073,3 +1073,5 @@ legend {
     transition: none !important;
   }
 }
+
+select{width:100%;background:#f8faf6;border:1px solid #dfe5dc;border-radius:8px;padding:12px 13px;color:var(--ink);font:inherit;font-size:12px}select:focus-visible{outline:3px solid #9eba7c;outline-offset:3px}

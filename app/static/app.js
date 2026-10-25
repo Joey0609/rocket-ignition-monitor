@@ -27,7 +27,7 @@ const states = {
   VERIFYING: ["疑似点火", "正在检查连续强证据，尚未发出确认"],
   CONFIRMED: ["点火已确认", "已生成点火确认事件"],
   REVIEW: ["点火已确认", "当前火光减弱，保留已发生事件"],
-  PAUSED: ["画面复核", "输入变化或切镜，当前结论暂不可用"],
+  PAUSED: ["画面复核", "画面暂不可判定，已有确认事件保留"],
   COOLDOWN: ["纠错冷却", "候选已取消或确认已撤销"],
   STOPPED: ["已停止", "检测任务已停止，事件记录保留"],
 };
@@ -41,6 +41,7 @@ const labels = {
   reconnecting: "直播信号重连",
   error: "输入出现异常",
   config_saved: "任务配置已保存",
+  config_migrated: "已升级为发动机初始火光模式，请核对喷口区域",
 };
 function toast(text, alert = false) {
   $("toast").textContent = text;
@@ -144,8 +145,13 @@ function timecode(t) {
 }
 function renderStatus(s) {
   current = s;
+  if (s.active_roi) drawROI(s.active_roi);
   const running = ["running", "connecting", "reconnecting"].includes(s.phase);
   $("phase").textContent = phases[s.phase] || s.phase;
+  $("confirm-policy").textContent =
+    (s.detector_mode || config.detector_mode) === "legacy"
+      ? "最近 10 帧至少 8 帧强证据"
+      : "喷口局部强证据，4 帧中至少 3 帧确认";
   $("phase").parentElement.classList.toggle("live", s.phase === "running");
   $("source-name").textContent = s.source_name || "NO SIGNAL";
   $("start").disabled = running || uploading;
@@ -167,9 +173,9 @@ function renderStatus(s) {
   $("preview-caption").textContent = hasFrame
     ? "实时采样预览 · 检测区域已标记"
     : "画面就绪后显示检测区域";
-  const confirmed = s.event === 1;
+  const confirmed = s.confirmed_latched ?? (s.event === 1);
   $("event-value").textContent = confirmed
-    ? "已确认点火"
+    ? (s.event === null ? "已确认 · 画面复核" : "已确认点火")
     : s.event === null && hasFrame
       ? "暂不可判定"
       : "等待确认";
@@ -245,8 +251,8 @@ function renderEvents(events) {
     root.append(row);
   }
 }
-function drawROI() {
-  const [x1, y1, x2, y2] = config.roi || [0.03, 0.1, 0.8, 0.83];
+function drawROI(activeROI) {
+  const [x1, y1, x2, y2] = activeROI || (config.detector_mode === "legacy" ? config.roi : config.engine_roi) || [0.47, 0.79, 0.55, 0.91];
   Object.assign($("roi-box").style, {
     left: x1 * 100 + "%",
     top: y1 * 100 + "%",
@@ -365,13 +371,23 @@ $("fullscreen").onclick = () => {
       .requestFullscreen()
       .catch(() => toast("当前浏览器不支持全屏", true));
 };
+function fillDetectorSettings() {
+  const engine = $("detector-mode").value === "engine_glow";
+  const roi = (engine ? config.engine_roi : config.roi) || [0.47,0.79,0.55,0.91];
+  roi.forEach((v,i) => $("roi-"+i).value = v);
+  $("candidate-threshold").value = (engine ? config.engine_candidate_threshold : config.candidate_threshold) || .0005;
+  $("strong-threshold").value = (engine ? config.engine_strong_threshold : config.strong_threshold) || (engine ? .001 : .01);
+  $("warm-threshold").value = config.min_warm_score ?? .0003;
+  $("warm-threshold").disabled = engine;
+  $("auto-viewport").disabled = !engine;
+}
+$("detector-mode").onchange = fillDetectorSettings;
 $("settings-open").onclick = async () => {
   try {
     config = await api("config");
-    config.roi.forEach((v, i) => ($("roi-" + i).value = v));
-    $("candidate-threshold").value = config.candidate_threshold;
-    $("strong-threshold").value = config.strong_threshold;
-    $("warm-threshold").value = config.min_warm_score;
+    $("detector-mode").value = config.detector_mode || "engine_glow";
+    $("auto-viewport").checked = config.auto_viewport !== false;
+    fillDetectorSettings();
     $("commands-enabled").checked = config.commands_enabled;
     $("confirm-command").value = config.confirm_command;
     $("retract-command").value = config.retract_command;
@@ -384,16 +400,20 @@ $("settings-open").onclick = async () => {
 $("settings-close").onclick = () => $("settings").close();
 $("settings-form").onsubmit = async (e) => {
   e.preventDefault();
+  const engine = $("detector-mode").value === "engine_glow";
   const data = {
-    roi: [0, 1, 2, 3].map((i) => Number($("roi-" + i).value)),
-    candidate_threshold: Number($("candidate-threshold").value),
-    strong_threshold: Number($("strong-threshold").value),
-    min_warm_score: Number($("warm-threshold").value),
+    ...config,
+    detector_mode: $("detector-mode").value,
+    auto_viewport: $("auto-viewport").checked,
     commands_enabled: $("commands-enabled").checked,
     confirm_command: $("confirm-command").value,
     retract_command: $("retract-command").value,
     command_timeout: Number($("command-timeout").value),
   };
+  data[engine ? "engine_roi" : "roi"] = [0,1,2,3].map(i => Number($("roi-" + i).value));
+  data[engine ? "engine_candidate_threshold" : "candidate_threshold"] = Number($("candidate-threshold").value);
+  data[engine ? "engine_strong_threshold" : "strong_threshold"] = Number($("strong-threshold").value);
+  data.min_warm_score = Number($("warm-threshold").value);
   try {
     await api("config", { method: "PUT", body: JSON.stringify(data) });
     config = data;

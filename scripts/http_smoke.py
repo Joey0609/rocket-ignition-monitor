@@ -65,10 +65,10 @@ with tempfile.TemporaryDirectory() as tmp:
                     10,
                     (320, 180),
                 )
-                for i in range(60):
+                for i in range(90):
                     image = np.zeros((180, 320, 3), np.uint8) + 20
-                    if i >= 20:
-                        cv2.rectangle(image, (90, 90), (200, 140), (0, 180, 255), -1)
+                    if i >= 65:
+                        cv2.rectangle(image, (146, 146), (168, 158), (0, 180, 255), -1)
                     writer.write(image)
                 writer.release()
                 cfg = client.get("/api/config").json() | {

@@ -81,7 +81,7 @@ def evaluate(summary, labels, predictions=None):
         "verdict": "Eventual interval hits do not establish timely engine-ignition detection.",
         "limitations": [
             "Labels are single-reviewer visual observations, not hardware ignition timestamps.",
-            "The same videos were used to tune V3 rules, so this is not blind validation.",
+            "The same videos were used to tune the detector rules, so this is not blind validation.",
             "1s/2s/5s are reporting bands, not a user-approved service-level objective.",
             "Every pre-glow confirmation counts as a false alert even if later retracted.",
         ],

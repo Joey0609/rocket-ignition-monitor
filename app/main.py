@@ -7,6 +7,7 @@ import subprocess
 import time
 import uuid
 from pathlib import Path
+from typing import Literal
 
 from fastapi import (
     FastAPI,
@@ -132,7 +133,7 @@ async def logout(request: Request):
 
 @app.get("/api/health")
 async def health():
-    return {"ok": True, "version": "1.0.0"}
+    return {"ok": True, "version": "1.1.0"}
 
 
 @app.get("/api/status")
@@ -151,6 +152,13 @@ async def config():
 
 
 class Config(BaseModel):
+    detector_mode: Literal["engine_glow", "legacy"] = "engine_glow"
+    engine_roi: list[float] = Field(
+        default=DEFAULTS["engine_roi"], min_length=4, max_length=4
+    )
+    engine_candidate_threshold: float = Field(default=0.0005, gt=0, le=1)
+    engine_strong_threshold: float = Field(default=0.001, gt=0, le=1)
+    auto_viewport: bool = True
     roi: list[float] = Field(default=DEFAULTS["roi"], min_length=4, max_length=4)
     candidate_threshold: float = Field(default=0.0005, gt=0, le=1)
     strong_threshold: float = Field(default=0.01, gt=0, le=1)
@@ -167,7 +175,17 @@ class Config(BaseModel):
             0 <= x1 < x2 <= 1 and 0 <= y1 < y2 <= 1 and (x2 - x1) * (y2 - y1) < 0.98
         ):
             raise ValueError("ROI must leave background outside")
-        if self.strong_threshold < self.candidate_threshold:
+        ex1, ey1, ex2, ey2 = self.engine_roi
+        if not (
+            0 <= ex1 < ex2 <= 1
+            and 0 <= ey1 < ey2 <= 1
+            and (ex2 - ex1) * (ey2 - ey1) < 0.98
+        ):
+            raise ValueError("Engine ROI must leave background outside")
+        if (
+            self.strong_threshold < self.candidate_threshold
+            or self.engine_strong_threshold < self.engine_candidate_threshold
+        ):
             raise ValueError("strong threshold must be >= candidate threshold")
         return self
 

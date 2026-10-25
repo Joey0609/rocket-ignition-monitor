@@ -139,7 +139,7 @@
               <span class="icon-box">◇</span>
               <div>
                 <strong>连续证据确认</strong>
-                <p>10 帧中至少 8 帧达到确认阈值</p>
+                <p id="confirm-policy">喷口局部强证据，4 帧中至少 3 帧确认</p>
               </div>
             </div>
             <div class="policy-row">
@@ -195,7 +195,7 @@
         <footer>
           <span>IGNITION MONITOR</span
           ><span>传统视觉检测 · 事件可追踪 · 指令执行可审计</span
-          ><span>v1.0</span>
+          ><span>v1.1</span>
         </footer>
       </main>
     </div>
@@ -213,8 +213,12 @@
         <p class="field-help">配置应用于下一次监测。调整前请先停止当前任务。</p>
         <fieldset>
           <legend>检测区域</legend>
+          <label for="detector-mode">识别模式</label>
+          <select id="detector-mode"><option value="engine_glow">发动机初始火光</option><option value="legacy">旧版宽区域检测</option></select>
+          <label class="switch-label"><input id="auto-viewport" type="checkbox">自动定位 SpaceLens 主画面</label>
+          <p class="field-help">新模式在主画面内检查喷口区域；首次接入约 5 秒、切镜后约 2 秒建立背景。</p>
           <p class="field-help">
-            归一化坐标 0–1；保留区域外背景，用于曝光补偿。
+            归一化坐标 0–1；新模式相对主画面填写，框住喷口和邻近照亮区域。
           </p>
           <div class="four-col">
             <label

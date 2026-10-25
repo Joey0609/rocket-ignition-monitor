@@ -1,0 +1,70 @@
+{
+  "definition": "First visually observable engine-base glow, bright core, or ignition-induced local illumination. Do not wait for exposed liftoff plume or rocket motion.",
+  "totals": {
+    "processed_images": 337049,
+    "video_seconds": 33704.9,
+    "pre_glow_seconds": 28497.806,
+    "pre_glow_false_confirmations": 0,
+    "eventual_hits": 3,
+    "missions": 3,
+    "pre_glow_images": 284980,
+    "pre_glow_unknown_images": 9330,
+    "timeliness_counts": {
+      "within_1s": 3,
+      "within_2s": 3,
+      "within_5s": 3
+    }
+  },
+  "missions": [
+    {
+      "id": "cz12_day",
+      "name": "长征十二号遥二 · 白天",
+      "mission_start_global_s": 0,
+      "last_no_glow_global_s": 7131.2,
+      "first_glow_global_s": 7131.4,
+      "confirmed_global_s": 7131.6,
+      "delay_lower_s": 0.2,
+      "delay_upper_s": 0.4,
+      "pre_glow_false_confirmations": 0,
+      "eventual_hit": true,
+      "pre_glow_unknown_images": 4863,
+      "pre_glow_images": 71313
+    },
+    {
+      "id": "cz8a_day",
+      "name": "长征八号甲遥三 · 白天（P1+P2）",
+      "mission_start_global_s": 8674.309,
+      "last_no_glow_global_s": 22012.2,
+      "first_glow_global_s": 22012.3,
+      "confirmed_global_s": 22012.7,
+      "delay_lower_s": 0.4,
+      "delay_upper_s": 0.5,
+      "pre_glow_false_confirmations": 0,
+      "eventual_hit": true,
+      "pre_glow_unknown_images": 470,
+      "pre_glow_images": 133379
+    },
+    {
+      "id": "cz8a_night",
+      "name": "长征八号甲遥11 · 夜间",
+      "mission_start_global_s": 25012.385,
+      "last_no_glow_global_s": 33041.1,
+      "first_glow_global_s": 33041.2,
+      "confirmed_global_s": 33041.5,
+      "delay_lower_s": 0.3,
+      "delay_upper_s": 0.4,
+      "pre_glow_false_confirmations": 0,
+      "eventual_hit": true,
+      "pre_glow_unknown_images": 3997,
+      "pre_glow_images": 80288
+    }
+  ],
+  "latency_scope": "Decoded video-time confirmation delay. Does not include RTMP transport, decoder buffering, WebSocket delivery, or command execution.",
+  "verdict": "Eventual interval hits do not establish timely engine-ignition detection.",
+  "limitations": [
+    "Labels are single-reviewer visual observations, not hardware ignition timestamps.",
+    "The same videos were used to tune the detector rules, so this is not blind validation.",
+    "1s/2s/5s are reporting bands, not a user-approved service-level objective.",
+    "Every pre-glow confirmation counts as a false alert even if later retracted."
+  ]
+}

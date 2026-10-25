@@ -1,0 +1,51 @@
+{
+  "input": "spacelens_day_night_full.mp4",
+  "input_sha256": "a18a9183af1edf066d36f5a774cb8f690ed21d652e7fa41841fd2438e79311e4",
+  "sample_fps": 10,
+  "width": 480,
+  "height": 270,
+  "roi": [
+    0.47,
+    0.79,
+    0.55,
+    0.91
+  ],
+  "candidate_threshold": 0.0005,
+  "strong_threshold": 0.001,
+  "warmup_frames": 50,
+  "confirm_window": 4,
+  "confirm_hits": 3,
+  "min_confirm_seconds": 0.2,
+  "segments": [
+    {
+      "id": "cz12_day",
+      "start_s": 0,
+      "end_s": 8674.309,
+      "bvid": "BV1sAtFzbEpo",
+      "pages": [
+        1
+      ]
+    },
+    {
+      "id": "cz8a_day",
+      "start_s": 8674.309,
+      "end_s": 25012.385,
+      "bvid": "BV1WT8qzMEsM",
+      "pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "cz8a_night",
+      "start_s": 25012.385,
+      "end_s": 33704.962813,
+      "bvid": "BV1t7hb6GEt4",
+      "pages": [
+        1
+      ]
+    }
+  ],
+  "rule": "Production engine-glow image pipeline with one fixed parameter set for every mission. Initialize only at distinct mission boundaries, never at P1/P2 boundaries. No ignition times or labels supplied to detector.",
+  "reacquire_frames": 20
+}

@@ -25,6 +25,19 @@ python benchmarks/summarize_long_run.py
 python benchmarks/evaluate_engine_glow.py --predictions /path/to/predictions.csv.gz --out docs/engine-glow-audit.json
 ```
 
-当前 V3 约延迟 5.3、3.9、15.8 秒。最终区间命中 3/3 不代表早期点火能力通过。
+历史 V3 约延迟 5.3、3.9、15.8 秒。最终区间命中 3/3 不代表早期点火能力通过。
 
 生成私下带图报告可先安装 Pillow，再运行 `build_engine_glow_report.py --research /path/to/evidence --video /path/to/spacelens_day_night_full.mp4 --out /path/to/report.html`。该脚本按人工标注提取对比帧，仅生成报告，不参与检测。
+
+## V4 发动机初始火光识别
+
+```bash
+python benchmarks/run_engine_glow_parallel.py /path/to/spacelens_day_night_full.mp4 --out /path/to/v4_run
+python benchmarks/evaluate_engine_glow.py --summary /path/to/v4_run/summary.json --predictions /path/to/v4_run/predictions.csv.gz --out /path/to/v4_audit.json
+```
+
+第一步使用服务器实际的 `EngineGlowPipeline` 和状态机，480×270 / 10 FPS，所有任务使用同一 ROI/阈值，首次背景 50 帧、切镜后重建 20 帧。三个发射任务可独立并行处理，长征八号甲遥三的 P1/P2 在同一个连续进程内，不能在分 P 处重建背景。解码采用 `copyts`、先 `fps` 后按整数 `start_pts/end_pts` 裁剪（结束边界向上取整），保持全局 0.1 秒采样网格。合并时检查逐样本编号连续、总数与 FFprobe 一致、三个进程算法文件 SHA256 一致；任何不完整输入或解码异常均不生成完整通过结果。
+
+第二步才读取发动机初始火光标注，计入所有发射前确认，即使随后撤销。未知帧单列；延迟从“最后无火光～首次确定有火光”的人工标注区间计算，不回溯修改识别器实际确认时刻。`--mission` 可在串行入口 `run_engine_glow.py` 中只重跑一个完整任务；复现验收必须跑全量三场。
+
+重复执行可加 `--reuse-complete`：只复用原视频 SHA256、算法 SHA256、参数及首尾样本编号全部匹配的完整任务；合并仍逐行检查 CSV，缺帧任务会重新运行。失败重跑会移除旧成功标记，避免把上一次结果误当成新测试通过。

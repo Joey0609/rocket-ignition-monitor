@@ -19,3 +19,7 @@ benchmarks/spacelens_long_test_report.html
 
 # Exploratory clips and unvalidated detector experiments
 research/
+
+# Local RTMP test server generated TLS material
+auto.crt
+auto.key
