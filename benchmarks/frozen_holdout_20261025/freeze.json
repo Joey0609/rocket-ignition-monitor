@@ -1,0 +1,24 @@
+{
+  "frozen_at": "2026-10-25T05:35:23.745628+00:00",
+  "commit": "1e94a029bcc9b3e1a8bf424aeffe57096a3adead",
+  "source_hashes": {
+    "app/engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "app/detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3",
+    "app/core.py": "05cadfcb16ece241a7eab5d1ef9239fd86004ee4ca9b367c8dd15cd8a38a11e8",
+    "app/camera_guard.py": "c2e36cb9e6ef0b2579a912a971f40cf6ec5644b9474c357797cbb6c4497c728f"
+  },
+  "constraints": "No changes to detection rules, thresholds, FSM. Only annotations and layout adaptation allowed. P indices are zero-based.",
+  "roi": [
+    0.47,
+    0.79,
+    0.55,
+    0.91
+  ],
+  "candidate": 0.0005,
+  "strong": 0.001,
+  "confirm_window": 4,
+  "confirm_hits": 3,
+  "min_confirm_seconds": 0.2,
+  "warmup_frames": 50,
+  "reacquire_frames": 20
+}

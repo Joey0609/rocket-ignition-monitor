@@ -1,0 +1,196 @@
+{
+  "frozen": {
+    "frozen_at": "2026-10-25T05:35:23.745628+00:00",
+    "commit": "1e94a029bcc9b3e1a8bf424aeffe57096a3adead",
+    "source_hashes": {
+      "app/engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+      "app/detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3",
+      "app/core.py": "05cadfcb16ece241a7eab5d1ef9239fd86004ee4ca9b367c8dd15cd8a38a11e8",
+      "app/camera_guard.py": "c2e36cb9e6ef0b2579a912a971f40cf6ec5644b9474c357797cbb6c4497c728f"
+    },
+    "constraints": "No changes to detection rules, thresholds, FSM. Only annotations and layout adaptation allowed. P indices are zero-based.",
+    "roi": [
+      0.47,
+      0.79,
+      0.55,
+      0.91
+    ],
+    "candidate": 0.0005,
+    "strong": 0.001,
+    "confirm_window": 4,
+    "confirm_hits": 3,
+    "min_confirm_seconds": 0.2,
+    "warmup_frames": 50,
+    "reacquire_frames": 20
+  },
+  "selected_sources": [
+    {
+      "bvid": "BV1AGDqBqEeg",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 37317444360,
+      "bytes": 80080190,
+      "sha256": "4a3bcba3d96b9f92e53d119f77f45d83f8f9cfb31ea5bfd0906b6366dabdb8e9",
+      "duration_s": 5019.435,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1AGDqBqEeg/?p=1"
+    },
+    {
+      "bvid": "BV1CvWvzUEXf",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 33120257506,
+      "bytes": 75488220,
+      "sha256": "67b8a2702a2b8897d58ae08e60ee487ebe00e57b9b38465229c74541a2fe2334",
+      "duration_s": 3857.822,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1CvWvzUEXf/?p=1"
+    },
+    {
+      "bvid": "BV1FWLq6jExV",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 38449450189,
+      "bytes": 106228888,
+      "sha256": "02376be5689a9e0adde20388bc2c5cdefd549f7585285a0fe5a5a9e43d6d9ec2",
+      "duration_s": 7211.109625,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1FWLq6jExV/?p=1"
+    },
+    {
+      "bvid": "BV1FWLq6jExV",
+      "p0": 1,
+      "site_page": 2,
+      "cid": 38449450088,
+      "bytes": 81938356,
+      "sha256": "cfe51cab836f8886250136aa185ed5a58771ca66452d0be0b72c0246e2438ee1",
+      "duration_s": 7211.500938,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1FWLq6jExV/?p=2"
+    },
+    {
+      "bvid": "BV1FWLq6jExV",
+      "p0": 2,
+      "site_page": 3,
+      "cid": 38449450090,
+      "bytes": 88376907,
+      "sha256": "35e4b89c549ba72ad0764c94d1dedfb5841ba63f9108887e39252ae0cce0c0a2",
+      "duration_s": 7210.135125,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1FWLq6jExV/?p=3"
+    },
+    {
+      "bvid": "BV1FWLq6jExV",
+      "p0": 3,
+      "site_page": 4,
+      "cid": 38449450089,
+      "bytes": 37323748,
+      "sha256": "c6969461d80c866d32a6a5d999ea822e15aab3a31eda255e27fa2ce6c5bdee1a",
+      "duration_s": 3809.054188,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1FWLq6jExV/?p=4"
+    },
+    {
+      "bvid": "BV1WT8qzMEsM",
+      "p0": 1,
+      "site_page": 2,
+      "cid": 31384407854,
+      "bytes": 246782889,
+      "sha256": "0dc21a52599f6f889cdb9fa228f93eab0160e3597fcd1e398fa6abede3c996ff",
+      "duration_s": 9119.036,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1WT8qzMEsM/?p=2"
+    },
+    {
+      "bvid": "BV1cEuCzYEyX",
+      "p0": 4,
+      "site_page": 5,
+      "cid": 31042699460,
+      "bytes": 88650868,
+      "sha256": "5eba9c8f9472d45008e71c0f43427840bb0d54cc9043a0c7a923b3c813617556",
+      "duration_s": 5086.7,
+      "source_url": "https://www.bilibili.com/video/BV1cEuCzYEyX/?p=5"
+    },
+    {
+      "bvid": "BV1dqkZBhEiA",
+      "p0": 7,
+      "site_page": 8,
+      "cid": 33875429116,
+      "bytes": 168428459,
+      "sha256": "f55e451a455b4b1f6b2c1035d903c02484b55d536d6baec2b0f5b9c40d0f5bd0",
+      "duration_s": 8349.708,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1dqkZBhEiA/?p=8"
+    },
+    {
+      "bvid": "BV1oL5p6hEKv",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 38248319211,
+      "bytes": 179936118,
+      "sha256": "f0f7fb6bead678cd17aa6cb2b2b739f053fa16d8b317943ef316853ce38fef1b",
+      "duration_s": 7402.15875,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1oL5p6hEKv/"
+    },
+    {
+      "bvid": "BV1rvbazSENY",
+      "p0": 1,
+      "site_page": 2,
+      "cid": 31663982545,
+      "bytes": 84684178,
+      "sha256": "613a85c73b9acf0b88a9ba163289f156d1ec65711dbdfa387fd8cf7f4cc99eb4",
+      "duration_s": 4749.029,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1rvbazSENY/?p=2"
+    },
+    {
+      "bvid": "BV1sAtFzbEpo",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 31519146968,
+      "bytes": 380784644,
+      "sha256": "f3e6114f38a708e8285f18133b826680490d054ef78c83212cc5c4ac7641df49",
+      "duration_s": 8674.309,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1sAtFzbEpo/?p=1"
+    },
+    {
+      "bvid": "BV1yjkcBUEdc",
+      "p0": 0,
+      "site_page": 1,
+      "cid": 35402875960,
+      "bytes": 92767265,
+      "sha256": "6b970a9ce02f19031947fb43e803eab820a89c39754b57af4b59ef0ecdc01d90",
+      "duration_s": 6056.846,
+      "width": 852,
+      "height": 480,
+      "source_url": "https://www.bilibili.com/video/BV1yjkcBUEdc/?p=1"
+    }
+  ],
+  "run_names": [
+    "BV1cEuCzYEyX_P4",
+    "BV1WT8qzMEsM_P1",
+    "BV1sAtFzbEpo_P0",
+    "BV1rvbazSENY_P1",
+    "BV1CvWvzUEXf_P0",
+    "BV1dqkZBhEiA_P7",
+    "BV1yjkcBUEdc_P0",
+    "BV1AGDqBqEeg_P0",
+    "BV1oL5p6hEKv_P0",
+    "BV1FWLq6jExV_continuous"
+  ],
+  "continuous_parts": "BV1FWLq6jExV P0-P3; no reset",
+  "p_index_base": 0
+}

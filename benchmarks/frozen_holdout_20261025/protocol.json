@@ -1,0 +1,52 @@
+{
+  "frozen_at": "2026-10-25T05:35:23.745628+00:00",
+  "commit": "1e94a029bcc9b3e1a8bf424aeffe57096a3adead",
+  "source_hashes": {
+    "app/engine_glow.py": "bcc57434b7fd9c29b4ea3ed71b5cf11380e5a58397fc607640fb9e45a996db56",
+    "app/detector.py": "7f9dff12399434ba2017c0e100ea7de212371b98c4ce62c4ebb66302ae67ebc3",
+    "app/core.py": "05cadfcb16ece241a7eab5d1ef9239fd86004ee4ca9b367c8dd15cd8a38a11e8",
+    "app/camera_guard.py": "c2e36cb9e6ef0b2579a912a971f40cf6ec5644b9474c357797cbb6c4497c728f"
+  },
+  "constraints": "No changes to detection rules, thresholds, FSM. Only annotations and layout adaptation allowed. P indices are zero-based.",
+  "roi": [
+    0.47,
+    0.79,
+    0.55,
+    0.91
+  ],
+  "candidate": 0.0005,
+  "strong": 0.001,
+  "confirm_window": 4,
+  "confirm_hits": 3,
+  "min_confirm_seconds": 0.2,
+  "warmup_frames": 50,
+  "reacquire_frames": 20,
+  "runner_sha256": "535f47c034629f4342be9b51e0cccb37edf1757cadf727988d3be7d8cb0cf5a3",
+  "evaluation_protocol": {
+    "fps": 10,
+    "resolution": [
+      480,
+      270
+    ],
+    "all_frames": true,
+    "manual_feedback_injected": false,
+    "new_layout_adaptation": false,
+    "independent_task_per_selected_video": true,
+    "continuous_group": "BV1FWLq6jExV P0-P3, single EngineGlowPipeline/FSM for entire concatenation",
+    "known_calibration_inputs": [
+      "BV1WT8qzMEsM P1",
+      "BV1sAtFzbEpo P0"
+    ],
+    "incomplete_diagnostics": "retained separately; never scored as complete"
+  },
+  "reproduction_runner_sha256": "ec30aa05c3a2e9a268318698f4ea067369a09f79df4c44177c6d44a07c3e1ed8",
+  "completion_validation_note": "The recorded detector execution used runner_sha256. The reproduction entry adds an independent full fps=10 decode count when container duration and sampled duration differ by more than0.15s. Detection rules, thresholds, FSM and image predictions are unchanged.",
+  "reproduction_validation": {
+    "verified": true,
+    "compared_frames": 74020,
+    "prediction_csv_plaintext_sha256": "bdb74cb7b7074ab7e8ca6263ca864e826ace174a05e06001fbb2c70e3a98fb27",
+    "entire_prediction_csv_identical": true,
+    "production_source_hashes_unchanged": true,
+    "completion_validation": "Independent full FFmpeg fps=10 frame count matches; clean reproduction also reaches EOF and completes with identical image predictions."
+  }
+}

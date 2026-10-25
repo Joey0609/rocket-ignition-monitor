@@ -1,0 +1,71 @@
+{
+  "definition": "First visible engine glow, white core or attributable local ignition illumination. Single-reviewer image labels, not telemetry. Distinguish live observation and replay-only footage; report replay-only hits separately rather than treating them as timely live detection.",
+  "source": "Single-reviewer visual annotation, no labels read by replay_frozen.py.",
+  "missions": {
+    "BV1cEuCzYEyX_P4": {
+      "last_no_glow_s": 2424.0,
+      "first_glow_s": 2424.1,
+      "evidence": "annotation/tianzhou_earlier and tianzhou_fine; first brief engine illumination at2424.1, dark again2424.2, sustained from2424.3.",
+      "prior_tuning": false
+    },
+    "BV1CvWvzUEXf_P0": {
+      "last_no_glow_s": 2115.7,
+      "first_glow_s": 2115.8,
+      "evidence": "annotation/cz8y4_fine/onset_zoom.jpg; engine-base orange glow before large exposed plume.",
+      "prior_tuning": false
+    },
+    "BV1sAtFzbEpo_P0": {
+      "last_no_glow_s": 7131.2,
+      "first_glow_s": 7131.4,
+      "prior_tuning": true
+    },
+    "BV1WT8qzMEsM_P1": {
+      "last_no_glow_s": 6118.8,
+      "first_glow_s": 6118.9,
+      "evidence": "annotation/old_cz8_p1_onset/contact_1.jpg, standalone P1 10FPS grid.",
+      "prior_tuning": true,
+      "note": "This P is now initialized independently at its start; previous full-mission run retained preceding P0 state."
+    },
+    "BV1rvbazSENY_P1": {
+      "last_no_glow_s": 1798.3,
+      "first_glow_s": 1798.4,
+      "evidence": "annotation/cz5_earliest/zoom_onset.jpg: first small short orange ignition flash at engine base; subsequent main white flame is later.",
+      "prior_tuning": false
+    },
+    "BV1dqkZBhEiA_P7": {
+      "last_no_glow_s": 5894.1,
+      "first_glow_s": 5894.3,
+      "evidence": "annotation/cz12y3_fine/onset_zoom_fine.jpg: local engine-base orange light; earlier5892cloud is not ignition light.",
+      "prior_tuning": false
+    },
+    "BV1yjkcBUEdc_P0": {
+      "last_no_glow_s": 5811.7,
+      "first_glow_s": 5811.8,
+      "evidence": "annotation/cz8ay7_fine/contact_1.jpg: first ignition illumination at base and left tower before later large orange plume.",
+      "prior_tuning": false
+    },
+    "BV1oL5p6hEKv_P0": {
+      "last_no_glow_s": 5319.6,
+      "first_glow_s": 5319.8,
+      "evidence": "annotation/tianzhou10_fine/contact_1.jpg; first engine-base hot core, before broad exposed plume.",
+      "prior_tuning": false
+    },
+    "BV1AGDqBqEeg_P0": {
+      "last_no_glow_s": 3844.9,
+      "first_glow_s": 3845.1,
+      "evidence": "annotation/cz8y7_live_fine/contact_1.jpg: first engine-base/tower illumination BEFORE later signal interruption and replay.",
+      "prior_tuning": false,
+      "replay_only": false,
+      "note": "Coarse thumbnails initially missed this brief live sequence. Full event review corrected annotation; no rule changes."
+    },
+    "BV1FWLq6jExV_continuous": {
+      "last_no_glow_s": 21162.7,
+      "first_glow_s": 21163.0,
+      "first_main_glow_s": 21168.8,
+      "evidence": "annotation/cz8y8_pip_earlier/pip_zoom.jpg: engine light first visible in PIP; main remains delayed until dissolve21168.8. Labels on exact merged 10FPS grid.",
+      "prior_tuning": false,
+      "note": "Same camera launch is visible first in PIP then main. Existing pipeline intentionally excludes outer PIP. No extra layout adaptation applied.",
+      "source_parts": "P0-P3 continuous, P2 ignition"
+    }
+  }
+}
